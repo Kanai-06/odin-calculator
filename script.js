@@ -34,7 +34,7 @@ const factorial = function(a) {
     }else {
         return factorial(a - 1) * a;
     }
-};
+}; 
 
 const percent = function(a, b){
     if(!(b >= 0 || b <= 100) || typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
