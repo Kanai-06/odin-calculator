@@ -1,33 +1,37 @@
-const add = function(a, b) {
-	if(typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
-    
-    return a + b;
-};
+let functions = {
+    add : function(a, b) {
+        if(typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
+        
+        return a + b;
+    },
 
-const subtract = function(a, b) {
-	return a - b;
-};
+    subtract : function(a, b) {
+        if(typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
+        
+        return a - b;
+    },
 
-const divide = function(a, b) {
-    if(b === 0 || typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
+    divide : function(a, b) {
+        if(typeof(a) !== "number" || typeof(b) !== "number" || b === 0) return "ERROR";
 
-	return Math.round(((a / b) + Number.EPSILON) * 1000000) / 1000000;
-};
+        return Math.round(((a / b) + Number.EPSILON) * 1000000) / 1000000;
+    },
 
-const multiply = function(a, b) {
-    if(typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
+    multiply : function(a, b) {
+        if(typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
 
-    return a * b;
-};
+        return a * b;
+    },
 
-const power = function(a, b) {
-    if(typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
-
-	return Math.round((Math.pow(a, b) + Number.EPSILON) * 1000000) / 1000000;
+    percent : function(a, b){
+        if(typeof(a) !== "number" || typeof(b) !== "number" || !(b >= 0 || b <= 100)) return "ERROR";
+        
+        return Math.round(((a * (b / 100)) + Number.EPSILON) * 1000000) / 1000000;
+    }
 };
 
 const factorial = function(a) {
-	if(a < 0 || typeof(a) !== "number") return "ERROR";
+	if(typeof(a) !== "number" || a < 0) return "ERROR";
 
     if(a === 0){
         return 1;
@@ -36,8 +40,87 @@ const factorial = function(a) {
     }
 }; 
 
-const percent = function(a, b){
-    if(!(b >= 0 || b <= 100) || typeof(a) !== "number" || typeof(b) !== "number") return "ERROR";
-    
-    return Math.round(((a * (b / 100)) + Number.EPSILON) * 1000000) / 1000000;
+
+
+const sqrt = function(a){
+    if(typeof(a) !== "number" || a < 0) return "ERROR";
+
+    return Math.round(((Math.sqrt(a)) + Number.EPSILON) * 1000000) / 1000000;
 }
+
+let numberOne;
+let numberTwo;
+let operationToDo;
+let M_value = 0;
+
+const display = document.querySelector("#display");
+
+const ON_CE = document.querySelector("#ON_CE");
+const MRC = document.querySelector("#MRC");
+const M_minus = document.querySelector("#M_minus");
+const M_plus = document.querySelector("#M_plus");
+
+M_plus.addEventListener("click", () => {
+    M_value+= Number(display.textContent);
+})
+
+M_minus.addEventListener("click", () => {
+    M_value-= Number(display.textContent);
+})
+
+MRC.addEventListener("click", () => {
+    display.textContent = M_value;
+    M_value = 0;
+})
+
+ON_CE.addEventListener("click", () => {
+    numberOne = null;
+    numberTwo = null;
+    operationToDo = null;
+    display.textContent = "";
+})
+
+const operationsLeft = document.querySelectorAll("#operations #left button");
+const operationsRight = document.querySelectorAll("#operations #right button");
+
+const equals = document.querySelector("#equals");
+
+function displayValue(value){
+    display.textContent = value;
+};
+
+equals.addEventListener("click", () => {
+    numberTwo = Number(display.textContent);
+    displayValue(functions[operationToDo](numberOne, numberTwo));
+});
+
+operationsLeft.forEach(operation => {
+    operation.addEventListener("click", () => {
+        switch(operation.id){
+            case "factorial":
+                displayValue(factorial(Number(display.textContent)));
+                break;
+            case "sqrt":
+                displayValue(sqrt(Number(display.textContent)));
+                break;
+            case "percent":
+                numberOne = Number(display.textContent);
+                display.textContent = "";
+                operationToDo = "percent";
+                break;
+            case "equals":
+                break;
+            default:
+                display.textContent += operation.textContent;
+                break;
+        }
+    })
+});
+
+operationsRight.forEach(operation => {
+    operation.addEventListener("click", () => {
+        numberOne = Number(display.textContent);
+        display.textContent = "";
+        operationToDo = operation.id;
+    })
+});
