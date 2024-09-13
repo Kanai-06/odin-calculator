@@ -31,7 +31,7 @@ let functions = {
 };
 
 const factorial = function(a) {
-	if(typeof(a) !== "number" || a < 0) return "ERROR";
+	if(typeof(a) !== "number" || a < 0 || !Number.isInteger(a)) return "ERROR";
 
     if(a === 0){
         return 1;
@@ -132,3 +132,73 @@ operationsRight.forEach(operation => {
         operationToDo = operation.id;
     })
 });
+
+const clickEvent = new Event('click');
+
+document.addEventListener('keypress', (e) => {
+    switch (e.key) {
+        case 'c':
+            ON_CE.dispatchEvent(clickEvent);
+            break;
+        case '!':
+            document.querySelector('#factorial').dispatchEvent(clickEvent);
+            break;
+        case '√':
+            document.querySelector('#sqrt').dispatchEvent(clickEvent);
+            break;
+        case '%':
+            document.querySelector('#percent').dispatchEvent(clickEvent);
+            break;
+        case '7':
+            document.querySelector('#seven').dispatchEvent(clickEvent);
+            break;
+        case '8':
+            document.querySelector('#eight').dispatchEvent(clickEvent);
+            break;
+        case '9':
+            document.querySelector('#nine').dispatchEvent(clickEvent);
+            break;
+        case '4':
+            document.querySelector('#four').dispatchEvent(clickEvent);
+            break;
+        case '5':
+            document.querySelector('#five').dispatchEvent(clickEvent);
+            break;
+        case '6':
+            document.querySelector('#six').dispatchEvent(clickEvent);
+            break;
+        case '1':
+            document.querySelector('#one').dispatchEvent(clickEvent);
+            break;
+        case '2':
+            document.querySelector('#two').dispatchEvent(clickEvent);
+            break;
+        case '3':
+            document.querySelector('#three').dispatchEvent(clickEvent);
+            break;
+        case '0':
+            document.querySelector('#zero').dispatchEvent(clickEvent);
+            break;
+        case '.':
+            document.querySelector('#point').dispatchEvent(clickEvent);
+            break;
+        case '=':
+        case 'Enter':
+            document.querySelector('#equals').dispatchEvent(clickEvent);
+            break;
+        case '/':
+            document.querySelector('#divide').dispatchEvent(clickEvent);
+            break;
+        case '*':
+            document.querySelector('#multiply').dispatchEvent(clickEvent);
+            break;
+        case '-':
+            document.querySelector('#subtract').dispatchEvent(clickEvent);
+            break;
+        case '+':
+            document.querySelector('#add').dispatchEvent(clickEvent);
+            break;
+        default:
+            break;
+    }
+})
