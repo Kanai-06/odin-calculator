@@ -14,7 +14,7 @@ let functions = {
     divide : function(a, b) {
         if(typeof(a) !== "number" || typeof(b) !== "number" || b === 0) return "ERROR";
 
-        return Math.round(((a / b) + Number.EPSILON) * 1000000) / 1000000;
+        return Math.round(((a / b) + Number.EPSILON) * 100) / 100;
     },
 
     multiply : function(a, b) {
@@ -24,9 +24,9 @@ let functions = {
     },
 
     percent : function(a, b){
-        if(typeof(a) !== "number" || typeof(b) !== "number" || !(b >= 0 || b <= 100)) return "ERROR";
+        if(typeof(a) !== "number" || typeof(b) !== "number" ) return "ERROR";
         
-        return Math.round(((a * (b / 100)) + Number.EPSILON) * 1000000) / 1000000;
+        return Math.round(((a * (b / 100)) + Number.EPSILON) * 100) / 100;
     }
 };
 
@@ -45,7 +45,7 @@ const factorial = function(a) {
 const sqrt = function(a){
     if(typeof(a) !== "number" || a < 0) return "ERROR";
 
-    return Math.round(((Math.sqrt(a)) + Number.EPSILON) * 1000000) / 1000000;
+    return Math.round(((Math.sqrt(a)) + Number.EPSILON) * 100) / 100;
 }
 
 let numberOne;
@@ -86,7 +86,15 @@ const operationsRight = document.querySelectorAll("#operations #right button");
 const equals = document.querySelector("#equals");
 
 function displayValue(value){
-    display.textContent = value;
+    if(String(value).length > 10){
+        display.textContent = "ERROR";
+    }
+    
+    if(String(value).indexOf('.') > -1){
+        display.textContent = value;
+    }else{
+        display.textContent = value + '.';
+    }
 };
 
 equals.addEventListener("click", () => {
@@ -111,7 +119,7 @@ operationsLeft.forEach(operation => {
             case "equals":
                 break;
             default:
-                display.textContent += operation.textContent;
+                display.textContent+= operation.textContent;
                 break;
         }
     })
